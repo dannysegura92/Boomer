@@ -1,0 +1,16 @@
+package com.me1.mygdxgame;
+
+import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.math.Rectangle;
+
+public class Bill {
+	private Sprite image;
+	Rectangle bounds;
+	
+	public Bill(){
+		image = Assets.bill;
+		bounds = new Rectangle(0,0,128,128);
+		
+	}
+
+}

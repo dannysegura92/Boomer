@@ -1,0 +1,268 @@
+package com.me1.mygdxgame;
+
+
+
+import java.util.Random;
+
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.GL10;
+import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Vector3;
+
+public class GameScreen implements Screen{
+
+	MyGame game;
+	
+	OrthographicCamera camera;
+	
+	SpriteBatch batch;
+	
+	float stateTime;
+	
+	int billX;
+	int billY;
+	
+	int obstacleX;
+	int obstacleY;
+	
+	Random rand;
+	
+	boolean appeared;
+	
+	int holder;
+	
+	Vector3 touch;
+	
+	Bill bill;
+	
+	Obstacle obstacle;
+	
+	Obstacle obstacle2;
+	
+	Obstacle obstacle3;
+	
+	Obstacle obstacle4;
+	
+	Obstacle obstacle5;
+	
+	long startTime;
+	
+	long estimatedTime;
+
+	boolean repeat;
+	
+
+	
+
+	
+	public GameScreen(MyGame game){
+		this.game = game;
+		
+		rand = new Random();
+		
+		camera = new OrthographicCamera();
+		
+		camera.setToOrtho(true, 1920,1080);
+		
+		batch = new SpriteBatch();
+		
+		touch = new Vector3();
+		
+		stateTime = 0F;
+		
+		holder =0;
+		
+		bill = new Bill();
+		
+		obstacle = new Obstacle();
+		
+		obstacle2 = new Obstacle();
+		
+		obstacle3 = new Obstacle();
+		
+		obstacle4 = new Obstacle();
+		
+		obstacle5 = new Obstacle();
+		
+		startTime = System.nanoTime();
+		
+
+
+		
+
+		
+
+		
+	}
+	
+	@Override
+	public void render(float delta) {
+		Gdx.gl.glClearColor(1F,1F,1F,1F);
+		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
+		
+		
+		
+		camera.update();
+		generalUpdate(touch, camera);
+		obstacleUpdate();
+		obstacle2Update();
+		
+		stateTime += Gdx.graphics.getDeltaTime();
+		Assets.current_frame = Assets.loading_animation.getKeyFrame(stateTime, true);
+		
+		batch.setProjectionMatrix(camera.combined);
+		
+		batch.begin();
+		
+			batch.draw(Assets.current_frame, 256,256);
+			
+			batch.draw(bill.image, bill.bounds.x, bill.bounds.y);
+			
+			if (obstacle.counter ==0 ){
+				obstacle.bounds.y = rand.nextInt(952);
+				obstacle.counter++;
+			}
+			
+			batch.draw(obstacle.image, obstacle.bounds.x, obstacle.bounds.y);
+
+			
+			estimatedTime = (System.nanoTime() - startTime)/1000000000;
+			
+
+			/*****checks if the lapsed time is divisible by 3 ******/
+			if ((estimatedTime % 3 == 0) && (estimatedTime != 0)){
+				System.out.println("time is divisible of three !!");
+				startTime = System.nanoTime();
+
+				
+				if (obstacle2.counter ==0 ){
+					obstacle2.bounds.y = rand.nextInt(952);
+					obstacle2.counter = obstacle2.counter + 1;
+					obstacle2.bounds.x = 1920;
+					
+					batch.draw(obstacle.image, obstacle2.bounds.x, obstacle2.bounds.y);
+				}
+				
+				if ((obstacle3.counter ==0) && (obstacle2.counter > 0) ){
+					obstacle3.bounds.y = rand.nextInt(952);
+					obstacle3.counter++;
+					obstacle3.bounds.x = 1920;
+					
+					batch.draw(obstacle.image, obstacle3.bounds.x, obstacle3.bounds.y);
+				}
+				
+				if ((obstacle4.counter ==0) && (obstacle3.counter > 0) ){
+					obstacle4.bounds.y = rand.nextInt(952);
+					obstacle4.counter++;
+					obstacle4.bounds.x = 1920;
+					
+					batch.draw(obstacle.image, obstacle4.bounds.x, obstacle4.bounds.y);
+				}
+				
+				if ((obstacle5.counter ==0) && (obstacle4.counter > 0) ){
+					obstacle5.bounds.y = rand.nextInt(952);
+					obstacle5.counter++;
+					obstacle5.bounds.x = 1920;
+					
+					batch.draw(obstacle.image, obstacle5.bounds.x, obstacle5.bounds.y);
+				}
+				
+			}
+			
+
+			/********************************************************/
+			
+			if (obstacle2.counter > 0){
+				batch.draw(obstacle.image, obstacle2.bounds.x, obstacle2.bounds.y);
+			}
+			
+			if (obstacle3.counter > 0){
+				batch.draw(obstacle.image, obstacle3.bounds.x, obstacle3.bounds.y);
+			}
+			
+			if (obstacle4.counter > 0){
+				batch.draw(obstacle.image, obstacle4.bounds.x, obstacle4.bounds.y);
+			}
+			
+			if (obstacle5.counter > 0){
+				batch.draw(obstacle.image, obstacle5.bounds.x, obstacle5.bounds.y);
+			}
+			
+
+			
+		
+		
+		batch.end();
+		
+	}
+	
+	public void generalUpdate(Vector3 touch, OrthographicCamera camera){
+		if(Gdx.input.isTouched()){
+			touch.set(Gdx.input.getX(), Gdx.input.getY(), 0);
+			camera.unproject(touch);
+			bill.bounds.x = (int)touch.x;
+			bill.bounds.y = (int)touch.y;
+			
+		}
+		if(bill.bounds.overlaps(obstacle.bounds)){
+			System.out.println("COLLISION!!!1");
+			
+		}
+		
+		if(bill.bounds.overlaps(obstacle2.bounds)){
+			System.out.println("COLLISION!!!2");
+			
+		}
+		
+		
+	}
+	
+	public void obstacleUpdate(){
+		
+		obstacle.bounds.x -= 5;
+	}
+	
+	public void obstacle2Update(){
+		
+		obstacle2.bounds.x -= 5;
+	}
+
+	@Override
+	public void resize(int width, int height) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void show() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void hide() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void pause() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void resume() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void dispose() {
+		// TODO Auto-generated method stub
+		
+	}
+
+}

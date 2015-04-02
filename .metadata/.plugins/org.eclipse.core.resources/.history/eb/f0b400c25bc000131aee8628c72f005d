@@ -1,0 +1,80 @@
+package com.me1.mygdxgame;
+
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.Texture.TextureFilter;
+import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
+
+public class Assets {
+	
+	public static Texture texture_back;
+	
+	public static Sprite sprite_back;
+	
+	public static Texture sheet;
+	public static TextureRegion[] sheet_frames;
+	public static TextureRegion current_frame;
+	public static Animation loading_animation;
+	
+	public static Texture texture_bill;
+	public static Sprite bill;
+	
+	public static Texture texture_obstacle;
+	public static Sprite obstacle;
+	
+	public static Texture texture_obstacle2;
+	public static Sprite obstacle2;
+
+	
+
+	
+
+	
+	public static void load(){
+		
+		
+		texture_back = new Texture(Gdx.files.internal("menu/back.png"));
+		
+		//****helps adjust image
+		texture_back.setFilter(TextureFilter.Linear, TextureFilter.Linear);
+		sprite_back= new Sprite(texture_back);
+		sprite_back.flip(false, true);
+		//****
+		
+		sheet = new Texture(Gdx.files.internal("menu/loadingsheet.png"));
+		TextureRegion[][] temp = TextureRegion.split(sheet, 16,16);
+		sheet_frames = new TextureRegion[12];
+		
+		int index = 0;
+		for(int i=0; i < 3; i++){
+			for(int j=0; j<4; j++){
+				sheet_frames[index++] = temp[i][j];
+			}
+		}
+		
+		for(int i = 0; i < 12; i++){
+			sheet_frames[i].flip(false,true);
+		}
+		
+		loading_animation = new Animation(0.2F, sheet_frames);
+		
+		
+		/*************keyboard vid
+		 */
+		
+		texture_bill = new Texture(Gdx.files.internal("menu/bill.png"));
+		bill = new Sprite(texture_bill);
+		
+		texture_obstacle2 = new Texture(Gdx.files.internal("menu/obstacle2.png"));
+		obstacle2 = new Sprite(texture_obstacle2);
+		
+		texture_obstacle = new Texture(Gdx.files.internal("menu/obstacle3.png"));
+		obstacle = new Sprite(texture_obstacle);
+		
+
+
+
+	}
+}

@@ -1,0 +1,57 @@
+package com.me1.mygdxgame;
+
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.Texture.TextureFilter;
+import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
+
+public class Assets {
+	
+	public static Texture texture_back;
+	
+	public static Sprite sprite_back;
+	
+	public static Texture texture_sheet;
+	
+	public static Sprite sprite_red;
+	public static Sprite sprite_blue;
+	public static Sprite sprite_yellow;
+	public static Sprite sprite_green;
+	
+	public static Texture sheet;
+	public static TextureRegion[]sheet_frames;
+	public static TextureRegion current_frame;
+	public static Animation loading_animation;
+
+	public static void load(){
+		
+		
+		texture_back = new Texture(Gdx.files.internal("menu/back.png"));
+		
+		//****helps adjust image
+		texture_back.setFilter(TextureFilter.Linear, TextureFilter.Linear);
+		sprite_back= new Sprite(texture_back);
+		sprite_back.flip(false, true);
+		//****
+		
+		TextureRegion[][] temp = TextureRegion.split(sheet, 16, 16);
+		sheet_frames = new TextureRegion[12];
+		
+		int index =0;
+		for(int i = 0; i < 3; i++){ // 3 is the number of rows in the sheet (temp)
+			for(int j = 0; j <4; j++){// 4 is the number of columns in the sheet
+				sheet_frames[index++] = temp[i][j];
+			}
+		}
+		
+
+		
+		texture_sheet = new Texture(Gdx.files.internal("menu/spritesheet.png"));
+		
+		sprite_red = new Sprite(texture_sheet, 0, 0, 16,16);
+		sprite_blue = new Sprite(texture_sheet, 16, 0, 16, 16);
+		sprite_yellow = new Sprite(texture_sheet, 32, 0, 16, 16);
+		sprite_green = new Sprite(texture_sheet, 48,0,16,16);
+	}
+}

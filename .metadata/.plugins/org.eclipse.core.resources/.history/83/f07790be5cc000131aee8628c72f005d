@@ -1,0 +1,21 @@
+package com.me1.mygdxgame;
+
+import com.badlogic.gdx.graphics.g2d.Sprite;
+
+
+
+public class TitleScreen {
+	
+	public Sprite image;
+
+	public int counter;
+	
+	public TitleScreen(){
+		image = Assets.sprite_back;
+
+		counter = 0;
+	}
+	
+	
+
+}
