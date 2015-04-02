@@ -1,0 +1,142 @@
+package com.me1.mygdxgame;
+
+
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.Texture.TextureFilter;
+import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
+
+public class Assets {
+	
+	public static Texture texture_back;
+	public static Sprite sprite_back;
+	
+	public static Texture sheet;
+	public static TextureRegion[] sheet_frames;
+	public static TextureRegion current_frame;
+	public static Animation loading_animation;
+	
+	public static Texture texture_bill;
+	public static Sprite bill;
+	
+	public static Texture texture_obstacle;
+	public static Sprite obstacle;
+	
+	public static Texture texture_obstacle2;
+	public static Sprite obstacle2;
+	
+	public static Texture texture_powerup1;
+	public static Sprite powerup1;
+	
+	public static Texture texture_powerdown1;
+	public static Sprite powerdown1;
+	
+	public static Texture texture_button;
+	public static Sprite button;
+	
+	public static Texture texture_cloudbackground;
+	public static Sprite cloudbackground;
+	
+	public static Texture texture_gameover;
+	public static Sprite gameover;
+	
+	public static Texture texture_tryagainbutton;
+	public static Sprite tryagainbutton;
+	
+	public static Sound Start;
+	public static Sound Collision;
+	public static Sound PU;
+	public static Sound PD;
+	
+	
+
+
+	
+
+	
+
+	
+	public static void load(){
+		
+		Texture.setEnforcePotImages(false);// had to deactivate enforcer 4.21.14
+		
+		
+		texture_back = new Texture(Gdx.files.internal("menu/background.png"));
+		
+		//****helps adjust image
+		texture_back.setFilter(TextureFilter.Linear, TextureFilter.Linear);
+		sprite_back= new Sprite(texture_back);
+		sprite_back.flip(false, true);
+		//****
+		
+		sheet = new Texture(Gdx.files.internal("menu/loadingsheet.png"));
+		TextureRegion[][] temp = TextureRegion.split(sheet, 16,16);
+		sheet_frames = new TextureRegion[12];
+		
+		int index = 0;
+		for(int i=0; i < 3; i++){
+			for(int j=0; j<4; j++){
+				sheet_frames[index++] = temp[i][j];
+			}
+		}
+		
+		for(int i = 0; i < 12; i++){
+			sheet_frames[i].flip(false,true);
+		}
+		
+		loading_animation = new Animation(0.2F, sheet_frames);
+		
+		
+		/*************keyboard vid
+		 */
+		
+
+		
+		texture_bill = new Texture(Gdx.files.internal("menu/bill.png"));
+		bill = new Sprite(texture_bill);
+		bill.flip(false, true);
+
+		
+		texture_obstacle2 = new Texture(Gdx.files.internal("menu/obstacle2.png"));//horiz
+		obstacle2 = new Sprite(texture_obstacle2);
+		
+		texture_obstacle = new Texture(Gdx.files.internal("menu/obstacle3.png"));//verti
+		obstacle = new Sprite(texture_obstacle);
+		
+		texture_powerup1 = new Texture(Gdx.files.internal("menu/powerup1.png"));
+		powerup1 = new Sprite(texture_powerup1);
+		powerup1.flip(false, true);
+		
+		texture_powerdown1 = new Texture(Gdx.files.internal("menu/powerdown1.png"));
+		powerdown1 = new Sprite(texture_powerdown1);
+		powerdown1.flip(false, true);
+
+		texture_button = new Texture(Gdx.files.internal("menu/Button.png"));
+		button = new Sprite(texture_button);
+		button.flip(false, true);
+		
+		texture_cloudbackground = new Texture(Gdx.files.internal("menu/cloudbackground.png"));
+		cloudbackground = new Sprite(texture_cloudbackground);
+		cloudbackground.flip(false, true);
+		
+		texture_gameover = new Texture(Gdx.files.internal("menu/gameover.png"));
+		gameover = new Sprite(texture_gameover);
+		gameover.flip(false, true);
+		
+		texture_tryagainbutton = new Texture(Gdx.files.internal("menu/tryagainbutton.png"));
+		tryagainbutton = new Sprite(texture_tryagainbutton);
+		tryagainbutton.flip(false, true);
+		
+		//load sounds
+		
+		Start = Gdx.audio.newSound(Gdx.files.internal("menu/Start.wav"));
+		Collision = Gdx.audio.newSound(Gdx.files.internal("menu/CollisionSound.wav"));
+		PU = Gdx.audio.newSound(Gdx.files.internal("menu/PU.wav"));
+		PD = Gdx.audio.newSound(Gdx.files.internal("menu/PD.wav"));
+
+
+	}
+}
